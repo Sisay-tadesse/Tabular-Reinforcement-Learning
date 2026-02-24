@@ -173,7 +173,7 @@ class StochasticWindyGridworld:
         return 
 
     def _initialize_plot(self):
-        self.fig,self.ax = plt.subplots()#figsize=(self.width, self.height+1)) # Start a new figure
+        self.fig,self.ax = plt.subplots(figsize=(self.width*2, self.height*2)) # Start a new figure
         self.ax.set_xlim([0,self.width])
         self.ax.set_ylim([0,self.height]) 
         self.ax.axes.xaxis.set_visible(False)
@@ -215,7 +215,7 @@ class StochasticWindyGridworld:
             self.Q_labels.append([])
             for action in range(self.n_actions):
                 plot_location = np.array(state_location) + 0.42 + 0.35 * np.array(self.action_effects[action])
-                next_label = self.ax.text(plot_location[0],plot_location[1]+0.03,0.0,fontsize=8)
+                next_label = self.ax.text(plot_location[0],plot_location[1]+0.03,0.0,fontsize=12)
                 self.Q_labels[state].append(next_label)
 
     def _plot_arrows(self,Q_sa):
