@@ -23,8 +23,8 @@ class QValueIterationAgent:
         ''' Returns the greedy best action in state s ''' 
         # TO DO: Add own code
         qs=self.Q_sa[s]
-        pi_s = argmax(qs)
-        return pi_s
+        a = argmax(qs)
+        return a
         
     def update(self,s,a,p_sas,r_sas):
         ''' Function updates Q(s,a) using p_sas and r_sas '''

@@ -22,21 +22,33 @@ class BaseAgent:
         
         if policy == 'greedy':
             # TO DO: Add own code
-            a = np.random.randint(0,self.n_actions) # Replace this with correct action selection
+            # Trial Beign
+            a = argmax(self.Q_sa[s])
+            # Trial End
+            # a = np.random.randint(0,self.n_actions) # Replace this with correct action selection
             
         elif policy == 'egreedy':
             if epsilon is None:
                 raise KeyError("Provide an epsilon")
                 
             # TO DO: Add own code
-            a = np.random.randint(0,self.n_actions) # Replace this with correct action selection
+            # Trial Beign
+            if np.random.random() < epsilon:
+                a = np.random.randint(0,self.n_actions)
+            else:
+                a = argmax(self.Q_sa[s])
+            # Trial End
+            # a = np.random.randint(0,self.n_actions) # Replace this with correct action selection
                  
         elif policy == 'softmax':
             if temp is None:
                 raise KeyError("Provide a temperature")
-                
+            # Trial Beign
+            pi_s = softmax(self.Q_sa[s])
+            a = np.random.Generator.choice(self.n_actions,p=pi_s)
+            # Trial End    
             # TO DO: Add own code
-            a = np.random.randint(0,self.n_actions) # Replace this with correct action selection
+            # a = np.random.randint(0,self.n_actions) # Replace this with correct action selection
               
         return a
         
