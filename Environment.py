@@ -34,8 +34,8 @@ class StochasticWindyGridworld:
         self.wind_blows_proportion = 0.9         
       
         self.reward_per_step = -1.0 # default reward on every step that does not reach a goal
-        self.goal_locations = [[7,3]] # [[6,2]] a vector specifying the goal locations in [[x1,y1],[x2,y2]] format
-        self.goal_rewards = [100] # a vector specifying the associated rewards with the goals in self.goal_locations, in [r1,r2] format
+        self.goal_locations = [[7,3],[3,2]] # [[6,2]] a vector specifying the goal locations in [[x1,y1],[x2,y2]] format
+        self.goal_rewards = [100,5] # a vector specifying the associated rewards with the goals in self.goal_locations, in [r1,r2] format
         
         # Initialize model
         self.initialize_model = initialize_model
@@ -165,7 +165,7 @@ class StochasticWindyGridworld:
                     # Update p_sas and r_sas
                     p_sas[s,a,next_state_without_wind] += (1-self.wind_blows_proportion)
                     for (i,goal) in enumerate(self.goal_locations):
-                        if np.all(next_state_without_wind == goal): # reached a goal!
+                        if np.all(next_location_without_wind == goal): # reached a goal!
                             r_sas[s,a,next_state_without_wind]  = self.goal_rewards[i] 
 
         self.p_sas = p_sas

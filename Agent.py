@@ -54,7 +54,7 @@ class BaseAgent:
         
     def update(self):
         raise NotImplementedError('For each agent you need to implement its specific back-up method') # Leave this and overwrite in subclasses in other files
-
+  
 
     def evaluate(self,eval_env,n_eval_episodes=30, max_episode_length=100):
         returns = []  # list to store the reward per episode
@@ -71,4 +71,9 @@ class BaseAgent:
                     s = s_prime
             returns.append(R_ep)
         mean_return = np.mean(returns)
+                
         return mean_return
+        # Goal : creating a learning curve from average returns of 20 repetitions 
+        # Helper- function: built in normal accuracy curve
+        # extend helper function to show confidence bound (95 percent confidence)
+        # 

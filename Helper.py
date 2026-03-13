@@ -38,6 +38,12 @@ class LearningCurvePlot:
         ''' name: string for filename of saved figure '''
         self.ax.legend()
         self.fig.savefig(name,dpi=300)
+    def fill_bound(self,x,y,se,alpha=0.3):
+        upper_conf_bound_95 = y + 1.96 * se
+        lower_conf_bound_95 = y - 1.96 * se
+
+        self.ax.fill_between(x,upper_conf_bound_95,lower_conf_bound_95,alpha=alpha)
+        
 
 def smooth(y, window, poly=2):
     '''

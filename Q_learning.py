@@ -9,6 +9,7 @@ By Thomas Moerland
 import numpy as np
 from Environment import StochasticWindyGridworld
 from Agent import BaseAgent
+from Helper import LearningCurvePlot
 
 class QLearningAgent(BaseAgent):
         
@@ -77,6 +78,14 @@ def test():
     eval_returns, eval_timesteps = q_learning(n_timesteps, learning_rate, gamma, policy, epsilon, temp, plot, eval_interval)
     for i in range(len(eval_timesteps)):
         print(f"Timestep {eval_timesteps[i]} = {eval_returns[i]} mean return ")
+    
+    # when evaluating, at the evaluation timesteps, we get a certain policy,
+    #  we test that policy by running it through several episodes
+    # , finding the return of each episode, then averaging by the total number of episode
+    # this will let us find the average return or mean
+    # then we can calcuate the standard error , that is standard deviation over square root of the number of episodes for that policy,
+    # confidence = mean +- SE
+    # 95 percent confidence bound = mean  +- 1.96 * SE 
 
 if __name__ == '__main__':
     test()
