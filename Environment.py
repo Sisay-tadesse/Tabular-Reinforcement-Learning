@@ -34,8 +34,8 @@ class StochasticWindyGridworld:
         self.wind_blows_proportion = 0.9         
       
         self.reward_per_step = -1.0 # default reward on every step that does not reach a goal
-        self.goal_locations = [[7,3]] # [[6,2]] a vector specifying the goal locations in [[x1,y1],[x2,y2]] format
-        self.goal_rewards = [100] # a vector specifying the associated rewards with the goals in self.goal_locations, in [r1,r2] format
+        self.goal_locations = [[7,3],[3,2]] # [[6,2]] a vector specifying the goal locations in [[x1,y1],[x2,y2]] format
+        self.goal_rewards = [100,5] # a vector specifying the associated rewards with the goals in self.goal_locations, in [r1,r2] format
         
         # Initialize model
         self.initialize_model = initialize_model
@@ -165,7 +165,7 @@ class StochasticWindyGridworld:
                     # Update p_sas and r_sas
                     p_sas[s,a,next_state_without_wind] += (1-self.wind_blows_proportion)
                     for (i,goal) in enumerate(self.goal_locations):
-                        if np.all(next_state_without_wind == goal): # reached a goal!
+                        if np.all(next_location_without_wind == goal): # reached a goal!
                             r_sas[s,a,next_state_without_wind]  = self.goal_rewards[i] 
 
         self.p_sas = p_sas
@@ -173,7 +173,7 @@ class StochasticWindyGridworld:
         return 
 
     def _initialize_plot(self):
-        self.fig,self.ax = plt.subplots()#figsize=(self.width, self.height+1)) # Start a new figure
+        self.fig,self.ax = plt.subplots(figsize=(self.width*2, self.height*2)) # Start a new figure
         self.ax.set_xlim([0,self.width])
         self.ax.set_ylim([0,self.height]) 
         self.ax.axes.xaxis.set_visible(False)
@@ -215,7 +215,7 @@ class StochasticWindyGridworld:
             self.Q_labels.append([])
             for action in range(self.n_actions):
                 plot_location = np.array(state_location) + 0.42 + 0.35 * np.array(self.action_effects[action])
-                next_label = self.ax.text(plot_location[0],plot_location[1]+0.03,0.0,fontsize=8)
+                next_label = self.ax.text(plot_location[0],plot_location[1]+0.03,0.0,fontsize=12)
                 self.Q_labels[state].append(next_label)
 
     def _plot_arrows(self,Q_sa):

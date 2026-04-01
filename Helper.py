@@ -9,7 +9,7 @@ By Thomas Moerland
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter
-from statsmodels.nonparametric.kernel_regression import KernelReg
+# from statsmodels.nonparametric.kernel_regression import KernelReg
 
 class LearningCurvePlot:
 
@@ -38,6 +38,12 @@ class LearningCurvePlot:
         ''' name: string for filename of saved figure '''
         self.ax.legend()
         self.fig.savefig(name,dpi=300)
+    def fill_bound(self,x,y,se,alpha=0.3):
+        upper_conf_bound_95 = y + 1.96 * se
+        lower_conf_bound_95 = y - 1.96 * se
+
+        self.ax.fill_between(x,upper_conf_bound_95,lower_conf_bound_95,alpha=alpha)
+        
 
 def smooth(y, window, poly=2):
     '''
@@ -77,6 +83,6 @@ if __name__ == '__main__':
     x = np.arange(100)
     y = 0.01*x + np.random.rand(100) - 0.4 # generate some learning curve y
     LCTest = LearningCurvePlot(title="Test Learning Curve")
-    LCTest.add_curve(y,label='method 1')
-    LCTest.add_curve(smooth(y,window=35),label='method 1 smoothed')
+    LCTest.add_curve(x,y,label='method 1')
+    LCTest.add_curve(x,smooth(y,window=35),label='method 1 smoothed')
     LCTest.save(name='learning_curve_test.png')
